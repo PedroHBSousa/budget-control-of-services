@@ -22,6 +22,10 @@ Route::get('/dashboard', function () {
 Route::get('/customers', [CostumerController::class, 'index'])->middleware(['auth', 'verified'])->name('customers.index');
 Route::get('/customers/create', [CostumerController::class, 'create'])->middleware(['auth', 'verified'])->name('customers.create');
 Route::post('/customers', [CostumerController::class, 'store'])->middleware(['auth', 'verified'])->name('customers.store');
+Route::get('/customers/{customer}', [CostumerController::class, 'show'])->middleware(['auth', 'verified'])->name('customers.show');
+Route::get('/customers/{customer}/edit', [CostumerController::class, 'edit'])->middleware(['auth', 'verified'])->name('customers.edit');
+Route::delete('/customers/{customer}', [CostumerController::class, 'destroy'])->middleware(['auth', 'verified'])->name('customers.destroy');
+Route::put('/customers/{customer}', [CostumerController::class, 'update'])->middleware(['auth', 'verified'])->name('customers.update');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -29,4 +33,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

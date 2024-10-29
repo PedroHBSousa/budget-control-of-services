@@ -1,35 +1,29 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Http\Requests\StoreCostumerRequest;
 use App\Models\Customer;
 use App\Models\Address;
 use Inertia\Inertia;
-use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class CostumerController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Customer/Index');
+        $customers = Customer::where('user_id', Auth::user()->id)->get();
+        return Inertia::render('Customer/Index', ['customers' => $customers]);
     }
+
     public function create()
     {
         return Inertia::render('Customer/Create');
     }
-    public function store(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required',
-            'street' => 'required',
-            'number' => 'required',
-            'city' => 'required',
-            'state' => 'required',
-            'zip' => 'required',
-        ]);
 
+    public function store(StoreCostumerRequest $request): RedirectResponse
+    {
         $address = Address::create([
             'street' => $request->street,
             'number' => $request->number,
@@ -38,14 +32,40 @@ class CostumerController extends Controller
             'zip' => $request->zip,
         ]);
 
-        $customer = Customer::create([
+        Customer::create([
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
+            'user_id' => Auth::user()->id,
             'addresses_id' => $address->id,
         ]);
 
         return redirect()->route('customers.index');
     }
 
+    public function show(Customer $customer)
+    {
+        $customer->load('address');
+        return Inertia::render('Customer/Show', ['customer' => $customer]);
+    }
+
+    public function edit(Customer $customer)
+    {
+        $customer->load('address');
+        return Inertia::render('Customer/Edit', compact('customer'));
+    }
+
+    public function update(StoreCostumerRequest $request, Customer $customer): RedirectResponse
+    {
+        $customer->update($request->only(['name', 'email', 'phone']));
+        $customer->address()->update($request->only(['street', 'number', 'city', 'state', 'zip']));
+        return redirect()->route('customers.index');
+    }
+
+    public function destroy(Customer $customer): RedirectResponse
+    {
+        $customer->address()->delete();
+        $customer->delete();
+        return redirect()->route('customers.index');
+    }
 }

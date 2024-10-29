@@ -8,15 +8,34 @@ import TextInput from '@/Components/TextInput.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
 
+interface Customer {
+    id: number;
+    name: string;
+    email: string;
+    phone: string;
+    address: {
+        street: string;
+        number: string;
+        city: string;
+        state: string;
+        zip: string;
+    };
+}
+
+const props = defineProps<{
+    customer: Customer;
+}>();
+
 const form = useForm({
-    name: '',
-    email: '',
-    phone: '',
-    street: '',
-    number: '',
-    city: '',
-    state: '',
-    zip: '',
+    id: props.customer.id,
+    name: props.customer.name,
+    email: props.customer.email,
+    phone: props.customer.phone,
+    street: props.customer.address.street,
+    number: props.customer.address.number,
+    city: props.customer.address.city,
+    state: props.customer.address.state,
+    zip: props.customer.address.zip,
 });
 
 const fetchAddress = async (zip: string) => {
@@ -41,7 +60,7 @@ watch(() => form.zip, (zip) => {
 })
 
 const submit = () => {
-    form.post(route('customers.store'), {
+    form.put(route('customers.update', props.customer.id), {
         onFinish: () => {
             form.reset('name', 'email', 'phone', 'street', 'number', 'city', 'state', 'zip');
         },
@@ -59,7 +78,7 @@ const goToCostumers = () => {
     <AuthenticatedLayout>
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                Cadastrar Cliente
+                Editar Cliente
             </h2>
         </template>
 
@@ -67,7 +86,7 @@ const goToCostumers = () => {
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
-                        <h3 class="text-lg font-semibold">Insira os dados abaixo</h3>
+                        <h3 class="text-lg font-semibold">Edite os dados abaixo</h3>
                         <form @submit.prevent="submit" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="mt-4">
                                 <InputLabel for="name" value="Nome" />
