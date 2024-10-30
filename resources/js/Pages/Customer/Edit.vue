@@ -2,25 +2,12 @@
 import axios from 'axios';
 import { watch } from 'vue';
 import { useForm, router, Head } from '@inertiajs/vue3';
+import { Customer } from '@/types/Customer';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
-
-interface Customer {
-    id: number;
-    name: string;
-    email: string;
-    phone: string;
-    address: {
-        street: string;
-        number: string;
-        city: string;
-        state: string;
-        zip: string;
-    };
-}
 
 const props = defineProps<{
     customer: Customer;
@@ -105,7 +92,7 @@ const goToCostumers = () => {
                             <div class="mt-4">
                                 <InputLabel for="phone" value="Celular" />
                                 <TextInput id="phone" type="tel" class="mt-1 block w-full" v-model="form.phone" required
-                                    autocomplete="" />
+                                    autocomplete="" maxlength="11" />
                                 <InputError class="mt-2" :message="form.errors.phone" />
                             </div>
 

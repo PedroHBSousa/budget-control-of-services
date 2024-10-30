@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreCostumerRequest;
+use App\Http\Requests\StoreCustomerRequest;
+use App\Http\Requests\UpdateCustomerRequest;
 use App\Models\Customer;
 use App\Models\Address;
 use Inertia\Inertia;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
-class CostumerController extends Controller
+class CustomerController extends Controller
 {
     public function index()
     {
@@ -22,7 +23,7 @@ class CostumerController extends Controller
         return Inertia::render('Customer/Create');
     }
 
-    public function store(StoreCostumerRequest $request): RedirectResponse
+    public function store(StoreCustomerRequest $request): RedirectResponse
     {
         $address = Address::create([
             'street' => $request->street,
@@ -55,7 +56,7 @@ class CostumerController extends Controller
         return Inertia::render('Customer/Edit', compact('customer'));
     }
 
-    public function update(StoreCostumerRequest $request, Customer $customer): RedirectResponse
+    public function update(UpdateCustomerRequest $request, Customer $customer): RedirectResponse
     {
         $customer->update($request->only(['name', 'email', 'phone']));
         $customer->address()->update($request->only(['street', 'number', 'city', 'state', 'zip']));

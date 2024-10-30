@@ -86,7 +86,7 @@ const goToCostumers = () => {
                             <div class="mt-4">
                                 <InputLabel for="phone" value="Celular" />
                                 <TextInput id="phone" type="tel" class="mt-1 block w-full" v-model="form.phone" required
-                                    autocomplete="" />
+                                    autocomplete="" maxlength="11" />
                                 <InputError class="mt-2" :message="form.errors.phone" />
                             </div>
 
