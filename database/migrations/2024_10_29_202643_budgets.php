@@ -20,7 +20,6 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->string('status')->default('pending');
-            $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('customer_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

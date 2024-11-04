@@ -22,7 +22,9 @@ Route::get('/dashboard', function () {
 
 Route::middleware(['auth', 'verified'])->resource('customers', CustomerController::class);
 
+
 Route::get('/budgets', [BudgetController::class, 'index'])->middleware(['auth', 'verified'])->name('budgets.index');
+Route::get('/budgets/create', [BudgetController::class, 'create'])->middleware(['auth', 'verified'])->name('budgets.create');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

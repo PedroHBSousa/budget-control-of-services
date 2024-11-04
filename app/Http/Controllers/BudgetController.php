@@ -11,4 +11,9 @@ class BudgetController extends Controller
     {
         return Inertia::render('Budget/Index');
     }
+
+    public function create()
+    {
+        return Inertia::render('Budget/Create');
+    }
 }

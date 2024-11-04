@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { defineProps } from 'vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 
 interface Customer {
     id: number;
@@ -16,6 +17,9 @@ interface Customer {
         zip: string;
     };
 }
+const goToIndex = () => {
+    router.visit('/customers');
+};
 
 defineProps<{
     customer: Customer;
@@ -56,6 +60,9 @@ defineProps<{
                                 <strong>CEP:</strong> {{ customer.address.zip }}
                             </p>
                         </div>
+                        <PrimaryButton class="mt-4" @click="goToIndex">
+                            Voltar
+                        </PrimaryButton>
                     </div>
                 </div>
             </div>

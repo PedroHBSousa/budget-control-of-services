@@ -7,6 +7,10 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import Modal from '@/Components/Modal.vue';
 import DangerButton from '@/Components/DangerButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
+import TableRow from '@/Components/Table/TableRow.vue';
+import TableHeader from '@/Components/Table/TableHeader.vue';
+import Table from '@/Components/Table/Table.vue';
+import TableData from '@/Components/Table/TableData.vue';
 
 const form = useForm({});
 
@@ -66,29 +70,36 @@ const viewClient = (id: number) => {
                         <PrimaryButton @click="goToCreateClient">
                             Cadastrar Cliente
                         </PrimaryButton>
-
-                        <div>
-                            <h3 class="mt-4 text-lg font-semibold text-gray-800">Lista de Clientes</h3>
-                            <ul class="bg-white rounded-lg divide-y divide-gray-200 mt-4">
-                                <li v-for="customer in customers" :key="customer.id"
-                                    class="flex justify-between items-center py-4 px-6 hover:bg-gray-50 hover:rounded-lg">
-                                    <div>
-                                        <span class="block font-medium text-gray-900">{{ customer.name }}</span>
-                                        <span class="text-sm text-gray-600">{{ customer.phone }}</span>
-                                    </div>
-                                    <div class="flex space-x-2">
-                                        <button @click="viewClient(customer.id)">
-                                            <AkEyeOpen class="text-indigo-500 hover:text-indigo-400 text-2xl mr-2" />
-                                        </button>
-                                        <button @click="editClient(customer.id)">
-                                            <BxEdit class="text-yellow-500 hover:text-yellow-400 text-2xl mr-2" />
-                                        </button>
-                                        <button @click="confirmDeleteClient(customer.id)">
-                                            <McDelete2Line class="text-red-500 hover:text-red-400 text-2xl mr-2" />
-                                        </button>
-                                    </div>
-                                </li>
-                            </ul>
+                        <div class="mt-4">
+                            <Table>
+                                <template #teste>
+                                    <TableRow>
+                                        <TableHeader>Nome</TableHeader>
+                                        <TableHeader>Celular</TableHeader>
+                                        <TableHeader>Ações</TableHeader>
+                                    </TableRow>
+                                </template>
+                                <template #default>
+                                    <TableRow v-for="customer in customers" :key="customer.id" class="border-b">
+                                        <TableData class="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                            {{ customer.name }}</TableData>
+                                        <TableData class="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                            {{ customer.phone }}</TableData>
+                                        <TableData class="space-x-4 px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                            <button @click="viewClient(customer.id)">
+                                                <AkEyeOpen
+                                                    class="text-indigo-500 hover:text-indigo-400 text-2xl mr-2" />
+                                            </button>
+                                            <button @click="editClient(customer.id)">
+                                                <BxEdit class="text-yellow-500 hover:text-yellow-400 text-2xl mr-2" />
+                                            </button>
+                                            <button @click="confirmDeleteClient(customer.id)">
+                                                <McDelete2Line class="text-red-500 hover:text-red-400 text-2xl mr-2" />
+                                            </button>
+                                        </TableData>
+                                    </TableRow>
+                                </template>
+                            </Table>
                         </div>
                     </div>
                 </div>

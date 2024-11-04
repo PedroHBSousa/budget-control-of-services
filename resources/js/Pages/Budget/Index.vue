@@ -1,6 +1,11 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+
+const goToCreateBudget = () => {
+    router.visit('/budgets/create');
+};
 
 </script>
 
@@ -18,9 +23,11 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
-                        <h2>
-                            Orçamentos
-                        </h2>
+                        <div class="md:col-span-2 flex items-center justify-end mt-4">
+                            <PrimaryButton @click="goToCreateBudget">
+                                Cadastrar Cliente
+                            </PrimaryButton>
+                        </div>
                     </div>
                 </div>
             </div>

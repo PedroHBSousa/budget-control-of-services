@@ -58,6 +58,9 @@ class StoreCustomerRequest extends FormRequest
 
             'state.required' => 'O estado é obrigatório.',
             'state.size' => 'O estado deve ter 2 caracteres.',
+
+            'zip.required' => 'O CEP é obrigatório.',
+            'zip.size' => 'O CEP deve ter 8 caracteres.',
         ];
     }
 }
