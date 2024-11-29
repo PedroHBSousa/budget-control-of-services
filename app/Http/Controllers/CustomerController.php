@@ -12,9 +12,10 @@ use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
+
     public function index()
     {
-        $customers = Customer::where('user_id', Auth::user()->id)->get();
+        $customers = Customer::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(3);
         return Inertia::render('Customer/Index', ['customers' => $customers]);
     }
 
@@ -53,7 +54,7 @@ class CustomerController extends Controller
     public function edit(Customer $customer)
     {
         $customer->load('address');
-        return Inertia::render('Customer/Edit', compact('customer'));
+        return Inertia::render('Customer/Edit', ['customer' => $customer]);
     }
 
     public function update(UpdateCustomerRequest $request, Customer $customer): RedirectResponse

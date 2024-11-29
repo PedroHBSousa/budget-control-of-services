@@ -8,6 +8,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
+import ThirdButton from '@/Components/ThirdButton.vue';
 
 const props = defineProps<{
     customer: Customer;
@@ -134,10 +135,10 @@ const goToCostumers = () => {
                                 <PrimaryButton @click="goToCostumers">
                                     Voltar
                                 </PrimaryButton>
-                                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }"
+                                <ThirdButton class="ms-4" :class="{ 'opacity-25': form.processing }"
                                     :disabled="form.processing">
                                     Salvar
-                                </PrimaryButton>
+                                </ThirdButton>
                             </div>
                         </form>
                     </div>

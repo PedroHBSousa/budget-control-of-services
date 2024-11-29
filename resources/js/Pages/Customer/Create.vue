@@ -4,9 +4,11 @@ import { watch } from 'vue';
 import { useForm, router, Head } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import ThirdButton from '@/Components/ThirdButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
+
 
 const form = useForm({
     name: '',
@@ -128,10 +130,10 @@ const goToCostumers = () => {
                                 <PrimaryButton @click="goToCostumers">
                                     Voltar
                                 </PrimaryButton>
-                                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }"
+                                <ThirdButton class="ms-4" :class="{ 'opacity-25': form.processing }"
                                     :disabled="form.processing">
                                     Salvar
-                                </PrimaryButton>
+                                </ThirdButton>
                             </div>
                         </form>
                     </div>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { router, Head, useForm } from '@inertiajs/vue3';
-import { McDelete2Line, BxEdit, AkEyeOpen } from '@kalimahapps/vue-icons';
+import { McDelete2Line, BxEdit, AkEyeOpen, LuUserRoundPlus, FlDelete, CiEdit, IoOutlineEye } from '@kalimahapps/vue-icons';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import Modal from '@/Components/Modal.vue';
@@ -11,11 +11,16 @@ import TableRow from '@/Components/Table/TableRow.vue';
 import TableHeader from '@/Components/Table/TableHeader.vue';
 import Table from '@/Components/Table/Table.vue';
 import TableData from '@/Components/Table/TableData.vue';
+import TableRowHeader from '@/Components/Table/TableRowHeader.vue';
+import Pagination from '@/Components/Pagination.vue';
 
 const form = useForm({});
 
 defineProps({
-    customers: Object
+    customers: {
+        type: Object,
+        required: true,
+    }
 });
 
 const showConfirmDeleteCustomerModal = ref(false);
@@ -62,44 +67,51 @@ const viewClient = (id: number) => {
                 Clientes
             </h2>
         </template>
-
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
-                        <PrimaryButton @click="goToCreateClient">
-                            Cadastrar Cliente
+                        <PrimaryButton class="group flex items-center gap-2" @click="goToCreateClient">
+                            <LuUserRoundPlus class="text-indigo-600 text-2xl group-hover:stroke-white" />
+                            Adicionar Cliente
                         </PrimaryButton>
                         <div class="mt-4">
                             <Table>
                                 <template #teste>
-                                    <TableRow>
+                                    <TableRowHeader>
                                         <TableHeader>Nome</TableHeader>
                                         <TableHeader>Celular</TableHeader>
+                                        <TableHeader>Email</TableHeader>
                                         <TableHeader>Ações</TableHeader>
-                                    </TableRow>
+                                    </TableRowHeader>
                                 </template>
                                 <template #default>
-                                    <TableRow v-for="customer in customers" :key="customer.id" class="border-b">
-                                        <TableData class="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                    <TableRow v-for="customer in customers.data" :key="customer.id" class="border-b">
+                                        <TableData>
                                             {{ customer.name }}</TableData>
-                                        <TableData class="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                        <TableData>
                                             {{ customer.phone }}</TableData>
-                                        <TableData class="space-x-4 px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                            <button @click="viewClient(customer.id)">
-                                                <AkEyeOpen
-                                                    class="text-indigo-500 hover:text-indigo-400 text-2xl mr-2" />
-                                            </button>
-                                            <button @click="editClient(customer.id)">
-                                                <BxEdit class="text-yellow-500 hover:text-yellow-400 text-2xl mr-2" />
-                                            </button>
-                                            <button @click="confirmDeleteClient(customer.id)">
-                                                <McDelete2Line class="text-red-500 hover:text-red-400 text-2xl mr-2" />
-                                            </button>
+                                        <TableData>
+                                            {{ customer.email }}</TableData>
+                                        <TableData>
+                                            <div class="flex items-center gap-1">
+                                                <button @click="viewClient(customer.id)">
+                                                    <IoOutlineEye
+                                                        class="text-indigo-500 hover:text-indigo-400 text-2xl mr-2" />
+                                                </button>
+                                                <button @click="editClient(customer.id)">
+                                                    <CiEdit
+                                                        class="text-yellow-500 hover:text-yellow-400 text-2xl mr-2" />
+                                                </button>
+                                                <button @click="confirmDeleteClient(customer.id)">
+                                                    <FlDelete class="text-red-500 hover:text-red-400 text-2xl mr-2" />
+                                                </button>
+                                            </div>
                                         </TableData>
                                     </TableRow>
                                 </template>
                             </Table>
+                            <Pagination :pagination="customers" />
                         </div>
                     </div>
                 </div>

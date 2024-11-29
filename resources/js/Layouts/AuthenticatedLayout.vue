@@ -21,7 +21,7 @@ const showingNavigationDropdown = ref(false);
                             <!-- Logo -->
                             <div class="flex shrink-0 items-center">
                                 <Link :href="route('dashboard')">
-                                <CoBrandCashapp class="text-indigo-500 text-4xl mr-2" />
+                                <CoBrandCashapp class="text-indigo-600 text-4xl mr-2" />
                                 </Link>
                             </div>
 
