@@ -42,7 +42,7 @@ class CustomerController extends Controller
             'addresses_id' => $address->id,
         ]);
 
-        return redirect()->route('customers.index');
+        return redirect()->route('customers.index')->with('message', 'Cliente cadastrado com sucesso!' );
     }
 
     public function show(Customer $customer)

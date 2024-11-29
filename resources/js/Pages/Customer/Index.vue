@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { router, Head, useForm } from '@inertiajs/vue3';
-import { McDelete2Line, BxEdit, AkEyeOpen, LuUserRoundPlus, FlDelete, CiEdit, IoOutlineEye } from '@kalimahapps/vue-icons';
+import { ref, computed } from 'vue';
+import type { User } from '@/types';
+import { router, Head, useForm, usePage } from '@inertiajs/vue3';
+import { LuUserRoundPlus, FlDelete, CiEdit, IoOutlineEye, BxMessageAltError } from '@kalimahapps/vue-icons';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import Modal from '@/Components/Modal.vue';
@@ -13,6 +14,9 @@ import Table from '@/Components/Table/Table.vue';
 import TableData from '@/Components/Table/TableData.vue';
 import TableRowHeader from '@/Components/Table/TableRowHeader.vue';
 import Pagination from '@/Components/Pagination.vue';
+import Notification from '@/Components/Notification.vue';
+
+const page = usePage<{ flash: { message: string }, auth: { user: User } }>();
 
 const form = useForm({});
 
@@ -75,6 +79,11 @@ const viewClient = (id: number) => {
                             <LuUserRoundPlus class="text-indigo-600 text-2xl group-hover:stroke-white" />
                             Adicionar Cliente
                         </PrimaryButton>
+
+                        <div v-if="page.props.flash.message">
+                            <Notification :message="page.props.flash.message" />
+                        </div>
+
                         <div class="mt-4">
                             <Table>
                                 <template #teste>
