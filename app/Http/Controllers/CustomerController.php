@@ -15,7 +15,10 @@ class CustomerController extends Controller
 
     public function index()
     {
-        $customers = Customer::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(3);
+        $customers = Customer::where('user_id', Auth::user()->id)
+            ->orderBy('created_at', 'desc')
+            ->orderBy('id', 'desc')
+            ->paginate(5);
         return Inertia::render('Customer/Index', ['customers' => $customers]);
     }
 
@@ -42,7 +45,7 @@ class CustomerController extends Controller
             'addresses_id' => $address->id,
         ]);
 
-        return redirect()->route('customers.index')->with('message', 'Cliente cadastrado com sucesso!' );
+        return redirect()->route('customers.index')->with('message', 'Cliente criado com sucesso!');
     }
 
     public function show(Customer $customer)
@@ -68,6 +71,6 @@ class CustomerController extends Controller
     {
         $customer->address()->delete();
         $customer->delete();
-        return redirect()->route('customers.index');
+        return redirect()->route('customers.index')->with('message', 'Cliente deletado com sucesso!');
     }
 }

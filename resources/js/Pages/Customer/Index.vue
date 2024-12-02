@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import type { User } from '@/types';
-import { router, Head, useForm, usePage } from '@inertiajs/vue3';
+import { ref } from 'vue';
+import { router, Head, useForm } from '@inertiajs/vue3';
 import { LuUserRoundPlus, FlDelete, CiEdit, IoOutlineEye, BxMessageAltError } from '@kalimahapps/vue-icons';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -14,9 +13,6 @@ import Table from '@/Components/Table/Table.vue';
 import TableData from '@/Components/Table/TableData.vue';
 import TableRowHeader from '@/Components/Table/TableRowHeader.vue';
 import Pagination from '@/Components/Pagination.vue';
-import Notification from '@/Components/Notification.vue';
-
-const page = usePage<{ flash: { message: string }, auth: { user: User } }>();
 
 const form = useForm({});
 
@@ -80,10 +76,6 @@ const viewClient = (id: number) => {
                             Adicionar Cliente
                         </PrimaryButton>
 
-                        <div v-if="page.props.flash.message">
-                            <Notification :message="page.props.flash.message" />
-                        </div>
-
                         <div class="mt-4">
                             <Table>
                                 <template #teste>
@@ -95,7 +87,7 @@ const viewClient = (id: number) => {
                                     </TableRowHeader>
                                 </template>
                                 <template #default>
-                                    <TableRow v-for="customer in customers.data" :key="customer.id" class="border-b">
+                                    <TableRow v-for="customer in customers.data" :key="customer.id">
                                         <TableData>
                                             {{ customer.name }}</TableData>
                                         <TableData>
